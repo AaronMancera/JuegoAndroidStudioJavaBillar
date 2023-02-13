@@ -80,14 +80,6 @@ public class Billar extends GameView implements OnTouchEventListener {
         agujero6=new Bola(this, 2200,0,150,Color.BLACK,true);
         actores.add(agujero6); agujero6.setup();
 
-
-
-
-
-
-
-
-
     }
 
     //Realiza la lógica del juego, movimientos, física, colisiones, interacciones..etc
@@ -97,6 +89,46 @@ public class Billar extends GameView implements OnTouchEventListener {
         for (Sprite actor : actores) {
             if(actor.isVisible())
                actor.update();
+        }
+    }
+    //Metodo que resetea todaas las bolas
+    public void restart(){
+        this.vidas=3;
+        this.puntuacion=0;
+        for (Sprite actor :actores){
+            /*
+            if(actor.getColor()==Color.WHITE){
+                Log.d("Actor", "Blanca");
+                actor.restart(300,500);
+            }
+             */
+            switch (actor.getColor()){
+                case Color.WHITE:
+                    //Log.d("Actor", "Blanca");
+                    actor.restart(300,500);
+                    break;
+                case Color.RED:
+                    actor.restart(1900,300);
+                    break;
+                case Color.MAGENTA:
+                    actor.restart(1900,500);
+                    break;
+                case Color.YELLOW:
+                    actor.restart(1900,700);
+                    break;
+                case Color.BLUE:
+                    actor.restart(1500,500);
+                    break;
+                case Color.DKGRAY:
+                    actor.restart(1700,300);
+                    break;
+                case Color.GRAY:
+                    actor.restart(1700,700);
+                    break;
+                case Color.BLACK:
+                    actor.restart(1700,500);
+                    break;
+            }
         }
     }
 
@@ -113,7 +145,9 @@ public class Billar extends GameView implements OnTouchEventListener {
         }
         //dibujamos puntuacion y vidas
         paint.setTextSize(30);
+        paint.setColor(Color.WHITE);
         canvas.drawText("Puntuacion: " + this.puntuacion + "  Vidas: " + this.vidas, 300, 100, paint);
+        canvas.drawText("Reiniciar partida...",700,100,paint);
         paint.setTextSize(10);
         if(estaDentro){
             paint.setColor(Color.WHITE);
@@ -125,6 +159,15 @@ public class Billar extends GameView implements OnTouchEventListener {
 
           }
 
+        }
+        //Poner esto en el game view - Idea una crear un activity o auxiliares del layout - Tratarlo como un boton de otra clase
+        if(perdiste){
+            canvas.drawText("PERDISTE!!!!",1100,550,paint);
+            canvas.drawText("Has conseguido en total "+this.puntuacion,1100,600,paint);
+        }
+        if(ganaste){
+            canvas.drawText("GANASTEEE!!!!",1100,550,paint);
+            canvas.drawText("Has conseguido en total "+this.puntuacion,1100,600,paint);
         }
 
     }
@@ -144,6 +187,9 @@ public class Billar extends GameView implements OnTouchEventListener {
 
         }
         Log.d("billar","X: "+lineX1+" Y: "+lineY1);
+        if(event.getX()<800&&event.getX()>600&&event.getY()>100&&event.getY()<400){
+            this.restart();
+        }
 
     }
 

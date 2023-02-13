@@ -55,6 +55,16 @@ public class Bola extends Sprite implements OnColisionListener{
         */
 
     }
+    @Override
+    public void restart(int x,int y){
+        if(this.esAgujero==false) {
+            this.velActualX = 0;
+            this.velActualY = 0;
+            this.centroX = x;
+            this.centroY = y;
+        }
+
+    }
 
     @Override
     public boolean colision(Sprite s){
@@ -131,9 +141,10 @@ public class Bola extends Sprite implements OnColisionListener{
             else if(desaparece&&blanca){
                 centroX=300;
                 centroY=500;
+                game.vidas-=1;
                 velActualX=0;
                 velActualY=0;
-                game.vidas-=1;
+                //this.game.restart();
             }
             else if(desaparece&& !blanca){
                 centroX=4000;
@@ -141,13 +152,9 @@ public class Bola extends Sprite implements OnColisionListener{
                 velActualX=0;
                 velActualY=0;
                 game.puntuacion+=50;
-                if(esNegra){
+                if(esNegra&&this.game.puntuacion!=300){
                     game.vidas=0;
                 }
-            }
-            else if(desaparece&&s.color== Color.BLACK){
-                this.game.vidas=0;
-                this.game.pausado=true;
             }
         }
     }

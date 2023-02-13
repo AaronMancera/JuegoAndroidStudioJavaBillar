@@ -112,6 +112,7 @@ public abstract class Sprite implements OnColisionListener {
     public void recolocaXY(float x,float y){ }
 
     public abstract void setup();
+    public abstract void restart(int x, int y);
     public abstract void update();
 
 
